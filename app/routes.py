@@ -1,16 +1,6 @@
 from flask import Blueprint, jsonify, render_template
 from datetime import datetime
 from .scraper import fetch_trending_topics
-import pymongo
-import os
-from dotenv import load_dotenv
-
-load_dotenv()
-
-MONGO_DB_URI = os.getenv("MONGO_DB_URI")
-client = pymongo.MongoClient(MONGO_DB_URI)
-db = client["stir"]
-collection = db["trending_topics"]
 
 scraper_bp = Blueprint('scraper_bp', __name__)
 
@@ -27,8 +17,12 @@ def scrape_trending():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# Homepage to Display Trends
+# Homepage to Render HTML
 @scraper_bp.route('/', methods=['GET'])
 def index():
-    latest_trend = collection.find_one(sort=[("timestamp", -1)])  # Fetch latest trend
-    return render_template('index.html', trend=latest_trend)
+    return render_template('index.html')
+
+# Health Check Route (Separate Path)
+@scraper_bp.route('/health', methods=['GET'])
+def health_check():
+    return jsonify({"message": "Backend is up and running!"})
