@@ -51,7 +51,17 @@ def get_public_ip():
 # Scraper Function
 def fetch_trending_topics(proxy_failed=False):
     options = webdriver.ChromeOptions()
+     # === Key Chrome Options for Headless ===
+    options.add_argument("--headless")  # Run Chrome in headless mode
+    options.add_argument("--disable-gpu")  # Disable GPU
+    options.add_argument("--no-sandbox")  # Bypass OS security model
+    options.add_argument("--disable-dev-shm-usage")  # Overcome limited /dev/shm
+    options.add_argument("--remote-debugging-port=9222")  # Enable remote debugging
+    options.add_argument("--disable-software-rasterizer")  # Software rendering fallback
+    
     options.add_argument("--start-maximized")
+    options.add_argument("--window-size=1920x1080")
+   
 
     # Use proxy only if proxy_failed is False
     if not proxy_failed:
