@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify, redirect
 import os
 
 def create_app():
-    app = Flask(__name__, template_folder='../templates')
+    app = Flask(__name__, template_folder='templates')
     app.config['SECRET_KEY'] = 'supersecretkey'
 
     # HTTPS Redirect in Production
