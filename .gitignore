@@ -1,0 +1,42 @@
+# Python-related files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+*.egg-info/
+*.env
+
+# Flask specific
+instance/
+.env
+*.bak
+
+# Virtual environment
+venv/
+ENV/
+env/
+*.log
+
+# IDE/Editor related
+.vscode/
+.idea/
+*.iml
+
+# System files
+.DS_Store
+*.swp
+*.swo
+*.swn
+Thumbs.db
+*.tmp
+
+# Node (if you add frontend JS)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Selenium / WebDriver
+chromedriver
+geckodriver

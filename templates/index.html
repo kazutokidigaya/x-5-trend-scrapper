@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Twitter Scraper</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin-top: 50px;
+      }
+      button {
+        padding: 10px 20px;
+        font-size: 18px;
+      }
+      .trends {
+        margin-top: 20px;
+        text-align: left;
+        display: inline-block;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Twitter Trending Topic Scraper</h1>
+    <button onclick="scrapeTrending()">Start Scraping</button>
+    <p id="status"></p>
+
+    {% if trend %}
+    <div class="trends">
+      <h2>
+        Latest Trends ({{ trend.timestamp.strftime('%Y-%m-%d %H:%M:%S') }})
+      </h2>
+      <ul>
+        {% for topic in trend.topics %}
+        <li>{{ topic }}</li>
+        {% endfor %}
+      </ul>
+      <p><strong>Scraped from IP:</strong> {{ trend.ip_address }}</p>
+    </div>
+    {% else %}
+    <p>No trending topics available. Click the button to scrape.</p>
+    {% endif %}
+
+    <script>
+      async function scrapeTrending() {
+        document.getElementById("status").innerText = "Scraping in progress...";
+        const response = await fetch("/scrape");
+        const data = await response.json();
+        if (data.message) {
+          document.getElementById("status").innerText = data.message;
+          location.reload(); // Reload the page to fetch and display new data
+        } else {
+          document.getElementById("status").innerText = "Error during scraping";
+        }
+      }
+    </script>
+  </body>
+</html>
